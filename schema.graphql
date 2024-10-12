@@ -16,4 +16,11 @@ type Transaction @entity {
   gasPrice: BigInt!
   gasUsed: BigInt!
   effectiveGasPrice: BigInt!
+  gasCalculation: GasCalculation!
+}
+
+type GasCalculation @entity {
+  id: ID!
+  transaction: Transaction!
+  result: BigInt!
 }
