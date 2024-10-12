@@ -1,0 +1,19 @@
+type Block @entity {
+  id: ID!
+  number: BigInt!
+  timestamp: BigInt!
+  baseFeePerGas: BigInt
+  transactions: [Transaction!]! @derivedFrom(field: "block")
+}
+
+type Transaction @entity {
+  id: ID!
+  hash: Bytes!
+  block: Block!
+  from: Bytes!
+  to: Bytes
+  value: BigInt!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  effectiveGasPrice: BigInt!
+}
