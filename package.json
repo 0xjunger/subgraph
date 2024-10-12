@@ -1,0 +1,18 @@
+# change the scripts
+
+{
+  "name": "taiko-revenue-subgraph",
+  "version": "0.1.0",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ your-github-username/taiko-gas-calculation-subgraph",
+    "create-local": "graph create --node http://localhost:8020/ your-github-username/taiko-gas-calculation-subgraph",
+    "remove-local": "graph remove --node http://localhost:8020/ your-github-username/taiko-gas-calculation-subgraph",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 your-github-username/taiko-gas-calculation-subgraph"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.35.0",
+    "@graphprotocol/graph-ts": "0.29.1"
+  }
+}
