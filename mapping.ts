@@ -1,6 +1,5 @@
 import { BigInt, ethereum } from "@graphprotocol/graph-ts"
-import { Block, Transaction } from "../generated/schema"
-import { Transfer as TransferEvent } from "../generated/EthereumCore/EthereumCore" // Bu satırı ekleyin
+import { Block, Transaction, GasCalculation } from "../generated/schema"
 
 export function handleBlock(block: ethereum.Block): void {
   let blockEntity = new Block(block.hash.toHex())
@@ -26,8 +25,17 @@ function handleTransaction(tx: ethereum.Transaction, block: ethereum.Block): voi
   txEntity.gasUsed = tx.gasUsed
   txEntity.effectiveGasPrice = tx.effectiveGasPrice
   txEntity.save()
-}
 
-export function handleTransfer(event: TransferEvent): void {
-  // Transfer olayını işlemek için gereken kodu buraya yazın
+  let gasCalcEntity = new GasCalculation(tx.hash.toHex())
+  gasCalcEntity.transaction = txEntity.id
+
+  // (gas_price - basefee) * gas_used formülünü uygulayalım
+  let baseFee = block.baseFeePerGas ? block.baseFeePerGas : BigInt.fromI32(0)
+  let gasPrice = tx.gasPrice
+  let gasUsed = tx.gasUsed
+
+  let calculation = gasPrice.minus(baseFee).times(gasUsed)
+  gasCalcEntity.result = calculation
+
+  gasCalcEntity.save()
 }
