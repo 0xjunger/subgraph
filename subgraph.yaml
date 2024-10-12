@@ -19,8 +19,8 @@ dataSources:
         - Transaction
       abis:
         - name: EthereumCore
-          file: ./abis/EthereumCore.json
+          file: ./EthereumCore.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./mapping.ts
